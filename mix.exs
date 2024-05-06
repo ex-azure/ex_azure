@@ -27,6 +27,7 @@ defmodule ExAzureBase.MixProject do
       {:excoveralls, "~> 0.14", only: :test},
       {:ex_check, "~> 0.14", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.28", only: :dev, runtime: false},
+      {:hammox, "~> 0.7", only: :test, runtime: false},
       {:jason, "~> 1.4"},
       {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:nimble_options, "~> 1.0"},
