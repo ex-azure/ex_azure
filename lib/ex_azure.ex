@@ -1,0 +1,2 @@
+defmodule ExAzure do
+end
