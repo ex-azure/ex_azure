@@ -1,5 +1,11 @@
 defmodule ExAzure.Request do
-  defstruct [:auth, :method, :base_url, :path, :headers, :body, :query]
+  defstruct auth: :subscription_key,
+            method: :get,
+            base_url: nil,
+            path: nil,
+            headers: [],
+            body: nil,
+            query: []
 
   @type auth() :: :subscription_key
 
@@ -10,8 +16,8 @@ defmodule ExAzure.Request do
           method: methods(),
           base_url: String.t(),
           path: String.t(),
-          headers: map() | keyword(),
+          headers: list({String.t(), String.t()}),
           body: map() | struct() | nil,
-          query: map() | keyword()
+          query: list({String.t(), String.t()})
         }
 end
