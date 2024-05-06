@@ -5,8 +5,7 @@ defmodule ExAzure.Errors do
   @moduledoc section: :errors
   use Splode,
     error_classes: [
-      invalid_request: ExAzure.Errors.InvalidRequest,
-      invalid_response: ExAzure.Errors.InvalidResponse,
+      invalid: ExAzure.Errors.Invalid,
       internal: ExAzure.Errors.Internal,
       forbidden: ExAzure.Errors.Forbidden
     ],
@@ -33,22 +32,12 @@ defmodule ExAzure.Errors.Internal do
   @type t() :: Splode.Error.t()
 end
 
-defmodule ExAzure.Errors.InvalidRequest do
+defmodule ExAzure.Errors.Invalid do
   @moduledoc """
   Defines the error type for invalid requests to Azure Services.
   """
   @moduledoc section: :errors
-  use Splode.ErrorClass, class: :invalid_request
-
-  @type t() :: Splode.Error.t()
-end
-
-defmodule ExAzure.Errors.InvalidResponse do
-  @moduledoc """
-  Defines the error type for invalid responses from Azure Services.
-  """
-  @moduledoc section: :errors
-  use Splode.ErrorClass, class: :invalid_response
+  use Splode.ErrorClass, class: :invalid
 
   @type t() :: Splode.Error.t()
 end

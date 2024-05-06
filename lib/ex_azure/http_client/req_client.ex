@@ -3,7 +3,7 @@ defmodule ExAzure.HttpClient.ReqClient do
   A HTTP client implementation using the `req` library.
   """
   alias ExAzure.Commons.HeaderNames
-  alias ExAzure.Errors.{Internal, InvalidResponse, InvalidRequest, Forbidden}
+  alias ExAzure.Errors.{InvalidResponse, InvalidRequest, InvalidAuth, Unexpected}
 
   @behaviour ExAzure.HttpClient
 
@@ -15,20 +15,20 @@ defmodule ExAzure.HttpClient.ReqClient do
            headers: req.headers ++ auth_headers(req.auth, opts)
          )
          |> Req.request(url: req.path, json: req.body, params: req.query) do
-      {:ok, %Req.Response{status: status_code, body: body}} when status_code == 200 ->
+      {:ok, %Req.Response{status: status, body: body}} when status == 200 ->
         {:ok, body}
 
-      {:ok, %Req.Response{status: status_code, body: _body}} when status_code in [401, 403] ->
-        {:error, Forbidden.exception()}
+      {:ok, %Req.Response{status: status, body: body}} when status in [401, 403] ->
+        {:error, InvalidAuth.exception(status_code: status, path: req.path, cause: body)}
 
-      {:ok, %Req.Response{status: status, body: _body}} when status in 400..499 ->
-        {:error, InvalidRequest.exception()}
+      {:ok, %Req.Response{status: status, body: body}} when status in 400..499 ->
+        {:error, InvalidRequest.exception(status_code: status, path: req.path, cause: body)}
 
-      {:ok, %Req.Response{status: status, body: _body}} when status >= 500 ->
-        {:error, InvalidResponse.exception()}
+      {:ok, %Req.Response{status: status, body: body}} when status >= 500 ->
+        {:error, InvalidResponse.exception(status_code: status, path: req.path, cause: body)}
 
-      {:error, _} ->
-        {:error, Internal.exception()}
+      {:error, err} ->
+        {:error, Unexpected.exception(operation: "HTTP Request", cause: err)}
     end
   end
 
