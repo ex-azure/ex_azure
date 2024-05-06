@@ -5,7 +5,7 @@ defmodule ExAzure.HttpClient do
   alias ExAzure.Errors.{Forbidden, InvalidRequest, InvalidResponse, Internal}
   alias ExAzure.Request
 
-  @callback request(Request.t()) ::
+  @callback request(Request.t(), Keyword.t()) ::
               {:ok, map()}
               | {:error, Forbidden.t() | InvalidRequest.t() | InvalidResponse.t() | Internal.t()}
 end

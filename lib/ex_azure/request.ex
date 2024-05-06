@@ -1,9 +1,12 @@
 defmodule ExAzure.Request do
-  defstruct [:method, :base_url, :path, :headers, :body, :query]
+  defstruct [:auth, :method, :base_url, :path, :headers, :body, :query]
+
+  @type auth() :: :subscription_key
 
   @type methods() :: :get | :post | :put | :delete
 
   @type t() :: %__MODULE__{
+          auth: auth(),
           method: methods(),
           base_url: String.t(),
           path: String.t(),
@@ -11,15 +14,4 @@ defmodule ExAzure.Request do
           body: map() | struct() | nil,
           query: map() | keyword()
         }
-
-  def new(method, base_url, path, headers, body, query) do
-    %ExAzure.Request{
-      method: method,
-      base_url: base_url,
-      path: path,
-      headers: headers,
-      body: body,
-      query: query
-    }
-  end
 end

@@ -1,7 +1,13 @@
 defmodule ExAzure do
   @moduledoc false
 
-  def request(request), do: impl().request(request)
+  alias ExAzure.Config
+
+  def request(request, opts \\ []) do
+    with {:ok, opts} <- Config.new(opts) do
+      impl().request(request, opts)
+    end
+  end
 
   defp impl(),
     do:
