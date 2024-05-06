@@ -23,7 +23,7 @@ defmodule ExAzure.Config do
 
   defp default_config,
     do: [
-      region: Application.get_env(:ex_azure, :region),
-      subscription_key: Application.get_env(:ex_azure, :subscription_key)
+      region: Application.get_env(:ex_azure_base, :region),
+      subscription_key: Application.get_env(:ex_azure_base, :subscription_key)
     ]
 end
