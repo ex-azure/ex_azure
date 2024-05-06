@@ -14,7 +14,7 @@ defmodule ExAzure.HttpClient.ReqClient do
            base_url: req.base_url,
            headers: req.headers ++ auth_headers(req.auth, opts)
          )
-         |> Req.request(url: req.path, json: req.body, query: req.query) do
+         |> Req.request(url: req.path, json: req.body, params: req.query) do
       {:ok, %Req.Response{status: status_code, body: body}} when status_code == 200 ->
         {:ok, body}
 
