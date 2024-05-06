@@ -30,6 +30,7 @@ defmodule ExAzureBase.MixProject do
       {:jason, "~> 1.4"},
       {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:nimble_options, "~> 1.0"},
+      {:req, "~> 0.4"},
       {:splode, "~> 0.2"}
     ]
   end
